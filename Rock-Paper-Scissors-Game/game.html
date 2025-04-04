@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            color: white;
+            background-color: blue;
+        }
+        .choices button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            background-color: green;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock, Paper, Scissors</h1>
+    <div class="choices">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+    </div>
+    <div id="result"></div>
+    <div id="score">User: 0 | Computer: 0</div>
+
+    <script>
+        const choices = ["rock", "paper", "scissors"];
+        let userScore = 0;
+        let computerScore = 0;
+
+        document.querySelectorAll(".choices button").forEach(button => {
+            button.addEventListener("click", function() {
+                const userChoice = this.id;
+                const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+                const winner = determineWinner(userChoice, computerChoice);
+                displayResult(userChoice, computerChoice, winner);
+                updateScore(winner);
+            });
+        });
+
+        function determineWinner(user, computer) {
+            if (user === computer) {
+                return "draw";
+            } else if (
+                (user === "rock" && computer === "scissors") ||
+                (user === "paper" && computer === "rock") ||
+                (user === "scissors" && computer === "paper")
+            ) {
+                return "user";
+            } else {
+                return "computer";
+            }
+        }
+
+        function displayResult(user, computer, winner) {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `
+                You chose: ${user}<br>
+                Computer chose: ${computer}<br>
+                ${winner === "draw" ? "It's a draw!" : winner === "user" ? "You win!" : "Computer wins!"}
+            `;
+        }
+
+        function updateScore(winner) {
+            if (winner === "user") {
+                userScore++;
+            } else if (winner === "computer") {
+                computerScore++;
+            }
+            document.getElementById("score").textContent = `User: ${userScore} | Computer: ${computerScore}`;
+        }
+    </script>
+</body>
+</html>
