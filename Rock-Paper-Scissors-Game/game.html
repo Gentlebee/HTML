@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, Paper, Scissors</title>
+    <!-- This is CSS Code -->
     <style>
         body {
             font-family: sans-serif;
@@ -32,7 +33,7 @@
     </div>
     <div id="result"></div>
     <div id="score">User: 0 | Computer: 0</div>
-
+    <!-- This is JavaScript code -->
     <script>
         const choices = ["rock", "paper", "scissors"];
         let userScore = 0;
@@ -47,7 +48,7 @@
                 updateScore(winner);
             });
         });
-
+       // Function to determine winner
         function determineWinner(user, computer) {
             if (user === computer) {
                 return "draw";
@@ -61,7 +62,7 @@
                 return "computer";
             }
         }
-
+      // Function to display result
         function displayResult(user, computer, winner) {
             const resultDiv = document.getElementById("result");
             resultDiv.innerHTML = `
@@ -70,7 +71,7 @@
                 ${winner === "draw" ? "It's a draw!" : winner === "user" ? "You win!" : "Computer wins!"}
             `;
         }
-
+      // Function to update score given the winner
         function updateScore(winner) {
             if (winner === "user") {
                 userScore++;
