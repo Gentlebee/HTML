@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple SPA</title>
+    <style>
+        nav a {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a data-route="/" class="nav-link">Home</a>
+        <a data-route="/about" class="nav-link">About</a>
+        <a data-route="/contact" class="nav-link">Contact</a>
+    </nav>
+    <div id="content"></div>
+
+    <script>
+        const contentDiv = document.getElementById('content');
+
+        const routes = {
+            '/': '<h1>Home Page</h1><p>Welcome to the home page.</p>',
+            '/about': '<h1>About Page</h1><p>This is the about page.</p>',
+            '/contact': '<h1>Contact Page</h1><p>Contact us here.</p>',
+        };
+
+        function navigate(route) {
+            if (routes[route]) {
+                contentDiv.innerHTML = routes[route];
+                history.pushState({ route }, '', route); // Update URL
+            } else {
+                contentDiv.innerHTML = '<h1>404 Not Found</h1>';
+                history.pushState({ route }, '', route);
+            }
+        }
+
+        function handleLinkClick(event) {
+            if (event.target.classList.contains('nav-link')) {
+                event.preventDefault(); // Prevent default link behavior
+                const route = event.target.getAttribute('data-route');
+                navigate(route);
+            }
+        }
+
+        window.addEventListener('popstate', (event) => {
+            if (event.state && event.state.route) {
+                navigate(event.state.route);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialRoute = window.location.pathname;
+            navigate(initialRoute);
+
+            document.addEventListener('click', handleLinkClick);
+        });
+    
+	</script>
+</body>
+</html>
